@@ -1,0 +1,183 @@
+openapi: '3.0.3'
+info:
+  title: Workspace API
+  version: '1.0'
+  description: 'Use this api to perform CRUD on a workspace'
+  contact:
+    name: 'Workspace API'
+    url: https://drift.com/
+    email: "official.balraj@gmail.com"
+tags:
+  - name: Workspace
+    description: Everything about workspace
+paths:
+  /workspaces/{user_id}: 
+    get: 
+      tags:
+        - Workspace
+      summary:  To get workspaces for specific user
+      description: ''
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: The user_id used to fetch workspaces for specific user
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema: 
+                title: workspace
+                type: array
+                items:
+                  $ref: "#/components/schemas/Workspace"
+        '400':
+          $ref: "#/components/responses/unauthorizedError"
+    post: 
+      tags:
+        - Workspace
+      summary:  To create workspaces for specific user
+      description: ''
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: The user_id used to create workspace for specific user
+          schema:
+            type: string
+      requestBody:
+        description: create workspace object
+        content:
+          application/json:
+            schema: 
+              $ref: "#/components/schemas/Workspace"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Workspace"
+        '400':
+          $ref: "#/components/responses/unauthorizedError"
+
+  /workspaces/{user_id}/{workspace_id}: 
+    get: 
+      tags:
+        - Workspace
+      summary:  To get workspaces for specific user
+      description: ''
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: The user_id used to fetch workspaces for specific user
+          schema:
+            type: string
+        - name: workspace_id
+          in: path
+          required: true
+          description: The workspace_id used to fetch workspace for specific user
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Workspace"
+        '400':
+          $ref: "#/components/responses/unauthorizedError"
+    put: 
+      tags:
+        - Workspace
+      summary:  To update workspaces for specific user
+      description: ''
+      requestBody:
+        description: updated workspace object
+        content:
+          application/json:
+            schema: 
+              $ref: "#/components/schemas/Workspace"
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: The user_id used to update workspaces for specific user
+          schema:
+            type: string
+        - name: workspace_id
+          in: path
+          required: true
+          description: The workspace_id used to update workspace for specific user
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Workspace"
+        '400':
+          $ref: "#/components/responses/unauthorizedError"
+    delete: 
+      tags:
+        - Workspace
+      summary:  To delete workspaces for specific user
+      description: ''
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: The user_id used to delete workspaces for specific user
+          schema:
+            type: string
+        - name: workspace_id
+          in: path
+          required: true
+          description: The workspace_id used to delete workspace for specific user 
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successfully deleted
+        '400':
+          $ref: "#/components/responses/unauthorizedError"
+
+components:
+  schemas:
+    Workspace: 
+      type: object
+      properties:
+        workspace_id:
+          type: string
+          example: '1'
+        name:
+          type: string
+          example: 'myWorkspace'
+        created_by:
+          type: string
+          example: 'Baljeet Singh'
+        created_at:
+          type: string
+          example: '2/3/2024 10:18:22'
+        modified_by:
+          type: string
+          example: 'Balraj Singh'
+        modified_at:
+          type: string 
+          example: '2/3/2024 10:18:22'
+  securitySchemes:
+    bearerAuth:
+      description: Bearer token using a jwt
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    unauthorizedError:
+      description: Access token is missing or invalid

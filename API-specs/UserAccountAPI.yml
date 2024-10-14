@@ -1,0 +1,198 @@
+openapi: '3.0.3'
+info:
+  title: User API
+  description: 'Use this API to register, update and delete users'
+  version: '1.0'
+  contact:
+    name: "User API"
+    url: "https://drift.com/api"
+    email: "official.balraj@gmail.com"
+servers:
+  - url: https://prod.drift.com/api/v1/
+    description: "Production Server"
+  - url: https://dev.drift.com/api/v1/
+    description: "Development Server"
+tags:
+  - name: User
+    description: Everything about user
+paths:
+  /users:
+    get:
+      tags:
+        - User  
+      summary: "To get User account details"
+      description: "To get all the users based on the tenant Id provided in the payload in autherization header"
+      responses:
+        '200':
+          description: Successful responses
+          content:
+            application/json:
+              schema:
+                title: Users
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/unauthorizedError'
+      security:
+        - bearerAuth: []
+      
+  /user/{username}:
+    get:
+      tags:
+        - User
+      summary: "To get user from username"
+      description: ''
+      parameters:
+        - name: username
+          in: path
+          required: true
+          description: 'The name that is needed to fetch data'
+          schema: 
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/unauthorizedError'
+      security:
+        - bearerAuth: []
+    put:
+      tags:
+        - User
+      summary: To update user
+      description: This can be only done by logged in user
+      parameters:
+        - name: username
+          in: path
+          required: true
+          description: The name that is needed to fetch data
+          schema:
+            type: string
+      requestBody:
+        description: updated user object
+        content:
+          application/json:
+            schema:
+               $ref: '#/components/schemas/User'
+      responses:
+        default:
+          description: Successful operation
+        '401':
+          $ref: '#/components/responses/unauthorizedError'
+      security:
+        - bearerAuth: []
+
+    delete:
+      tags:
+        - User
+      summary: To delete user using username
+      description: ''
+      parameters:
+        - name: username
+          in: path
+          required: true
+          description: The name that is needed to fetch data
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+        '401':
+          $ref: '#/components/responses/unauthorizedError'
+      security:
+        - bearerAuth: []
+  /user:
+    post:
+      tags:
+        - User
+      summary: To create user
+      description: To create new user and providing the the details of user object like name, password, email in the header payload
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+             schema : 
+               $ref: '#/components/schemas/User'
+      responses:
+        default:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /user/login:
+    get:
+      tags:
+        - User
+      summary: To log user into the system
+      description: ''
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Invalid username/password supplied
+  /user/logout:
+    get:
+      tags:
+        - User
+      summary: To log out user in user session
+      description: ''
+      responses:
+        default:
+          description: Successful operation
+components:
+  schemas:
+    User:                
+      type: object
+      properties:
+        user_id: 
+          type: string
+          example: '1'
+        name: 
+          type: string
+          example: 'Balraj Singh'
+        email_id:
+          type: string
+          example: 'official.balraj@gmail.com'
+        password:
+          type: string
+          example: 'ua78ls@6778'
+  securitySchemes:
+    bearerAuth:
+      description: Bearer token using a jwt
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    unauthorizedError:
+      description: Access token is missing or invalid
+
+
+                    
+                    
+
+
