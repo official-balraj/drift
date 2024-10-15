@@ -1,2 +1,4 @@
 
 node_modules
+frontends/drift-ui/tsconfig.node.tsbuildinfo
+frontends/drift-ui/tsconfig.app.tsbuildinfo
