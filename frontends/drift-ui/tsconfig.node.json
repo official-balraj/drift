@@ -16,7 +16,13 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* Absolute paths */
+    "baseUrl": "src", // Set the base URL to the 'src' folder
+    "paths": {
+      "@/*": ["*"] // This will map imports starting with '@/' to the 'src' directory
+    }
   },
   "include": ["vite.config.ts"]
 }
