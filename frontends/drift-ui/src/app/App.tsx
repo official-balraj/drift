@@ -1,10 +1,11 @@
-import { SignIn } from "@/features"
 import "@/config/i18n/i18n"
+import { Router } from "@/router"
+import { RouterProvider } from "react-router-dom"
 
 function App() {
   return (
     <>
-      <SignIn></SignIn>
+      <RouterProvider router={Router} />
     </>
   )
 }
