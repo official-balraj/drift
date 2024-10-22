@@ -1,18 +1,22 @@
-import { Box } from "@mui/material"
+import { Box, styled } from "@mui/material"
 import { FC, PropsWithChildren } from "react"
 
-type FlexBoxProps = PropsWithChildren
+type FlexBoxProps = PropsWithChildren<Omit<React.ComponentPropsWithoutRef<typeof Box>, 'display' | 'justifyContent' | 'alignItems'>>;
 
-const FlexBox: FC<FlexBoxProps> = ({ children, ...props }) => {
+const FlexBoxStyle = styled(Box)(() => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center"
+}))
+
+const FlexBox: FC<FlexBoxProps> = ({children, ...props }) => {
   return (
-    <Box
+    <FlexBoxStyle
+    
       {...props}
-      display={"flex"}
-      justifyContent={"center"}
-      alignItems={"center"}
     >
       {children}
-    </Box>
+    </FlexBoxStyle>
   )
 }
 

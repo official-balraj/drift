@@ -7,7 +7,7 @@ const SignIn = () => {
   const { t: translate } = useTranslation()
 
   return (
-    <FlexBox>
+    <FlexBox sx={{height: "100vh"}}>
       <SignInCard>
         <Typography variant="h2">{translate("drift")}</Typography>
 
